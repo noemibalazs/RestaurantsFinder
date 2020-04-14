@@ -26,7 +26,7 @@ class BreweryViewModel(
     protected fun loadBreweriesFromServer() {
 
         val jobId = launch {
-            val response = breweryRepository.getAllBreweriesFromServer(1)
+            val response = breweryRepository.getAllBreweriesFromServer()
             withContext(Dispatchers.Main) {
                 response.either(
                     { failure -> onRemoteBreweriesLoaded(failure, null) },

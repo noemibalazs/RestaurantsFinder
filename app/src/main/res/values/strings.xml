@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Restaurants Finder</string>
+    <string name="name">Name: %s</string>
+    <string name="street"> Street: %s</string>
+    <string name="city_state">%s %s</string>
+    <string name="phone">Phone: %s</string>
 </resources>

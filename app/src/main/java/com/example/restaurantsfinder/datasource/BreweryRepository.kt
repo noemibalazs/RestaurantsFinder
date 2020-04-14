@@ -7,20 +7,22 @@ class BreweryRepository(
     val breweryLocalDataSource: BreweryLocalDataSource
 ) {
 
-    fun getAllBreweriesFromServer(page: Int) = breweryRemoteDataSource.getListOfBreweries(page)
+    fun getAllBreweriesFromServer() = breweryRemoteDataSource.getListOfBreweries()
 
-    fun getBreweriesByName(page: Int, name: String) =
-        breweryRemoteDataSource.getBreweriesByName(page, name)
+    fun getBreweriesByName(name: String) =
+        breweryRemoteDataSource.getBreweriesByName(name)
 
-    fun getBreweriesByCity(page: Int, city: String) =
-        breweryRemoteDataSource.getBreweriesByName(page, city)
+    fun getBreweriesByCity(city: String) =
+        breweryRemoteDataSource.getBreweriesByName(city)
 
-    fun getBreweriesByState(page: Int, state: String) =
-        breweryRemoteDataSource.getBreweriesByName(page, state)
+    fun getBreweriesByState(state: String) =
+        breweryRemoteDataSource.getBreweriesByName(state)
+
+    fun getBreweryById(id: Int) = breweryRemoteDataSource.getBreweryById(id)
 
     fun getAllBreweriesFromDB() = breweryLocalDataSource.getAllBreweries()
 
-    fun getBreweryById(id: Int) = breweryLocalDataSource.getBreweryById(id)
+    fun getBreweryByIdFromDB(id: Int) = breweryLocalDataSource.getBreweryById(id)
 
     fun addBrewery2DB(entity: BreweryEntity) = breweryLocalDataSource.addBrewery(entity)
 

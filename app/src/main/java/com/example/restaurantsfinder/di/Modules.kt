@@ -3,6 +3,7 @@ package com.example.restaurantsfinder.di
 import com.example.restaurantsfinder.breweryviewmodel.BreweryViewModel
 import com.example.restaurantsfinder.datasource.*
 import com.example.restaurantsfinder.helper.BreweryMapper
+import com.example.restaurantsfinder.helper.SharedPrefHelper
 import com.example.restaurantsfinder.network.BreweryApiService
 import com.example.restaurantsfinder.room.BreweryDAO
 import org.koin.android.ext.koin.androidApplication
@@ -48,4 +49,8 @@ val breweryViewModel = module {
     viewModel { BreweryViewModel(
         breweryRepository = get()
     ) }
+}
+
+val sharedModule = module {
+    single { SharedPrefHelper(androidApplication().applicationContext) }
 }

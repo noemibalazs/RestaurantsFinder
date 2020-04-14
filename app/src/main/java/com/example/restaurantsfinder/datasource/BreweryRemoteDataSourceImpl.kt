@@ -11,27 +11,37 @@ class BreweryRemoteDataSourceImpl(
     private val breweryApiService: BreweryApiService
 ) : BreweryRemoteDataSource {
 
-    override fun getListOfBreweries(page: Int): Either<Failure, List<Brewery>> {
+    override fun getListOfBreweries(): Either<Failure, List<Brewery>> {
         return breweryApiService.let {
-            breweryApiService.getListOfBreweries(page).executeAndDeliver().map { it }
+            breweryApiService.getListOfBreweries().executeAndDeliver().map { it }
         }
     }
 
-    override fun getBreweriesByCity(page: Int, city: String): Either<Failure, List<Brewery>> {
+    override fun getBreweriesByCity(city: String): Either<Failure, List<Brewery>> {
         return breweryApiService.let {
-            breweryApiService.getBreweriesByCity(page, city).executeAndDeliver().map { it }
+            breweryApiService.getBreweriesByCity(city).executeAndDeliver().map { it }
         }
     }
 
-    override fun getBreweriesByName(page: Int, name: String): Either<Failure, List<Brewery>> {
+    override fun getBreweriesByName(name: String): Either<Failure, List<Brewery>> {
         return breweryApiService.let {
-            breweryApiService.getBreweriesByName(page, name).executeAndDeliver().map { it }
+            breweryApiService.getBreweriesByName(name).executeAndDeliver().map { it }
         }
     }
 
-    override fun getBreweriesByState(page: Int, state: String): Either<Failure, List<Brewery>> {
+    override fun getBreweriesByState(state: String): Either<Failure, List<Brewery>> {
         return breweryApiService.let {
-            breweryApiService.getBreweriesByState(page, state).executeAndDeliver().map { it }
+            breweryApiService.getBreweriesByState(state).executeAndDeliver().map {
+                it
+            }
+        }
+    }
+
+    override fun getBreweryById(id: Int): Either<Failure, Brewery> {
+        return breweryApiService.let {
+            breweryApiService.getBreweryById(id).executeAndDeliver().map {
+                it
+            }
         }
     }
 }

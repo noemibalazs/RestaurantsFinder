@@ -11,21 +11,25 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface BreweryApiService {
 
-    @GET("?per_page=25")
-    fun getListOfBreweries(@Query("page") page: Int): Call<List<Brewery>>
+    @GET("?per_page=50")
+    fun getListOfBreweries(): Call<List<Brewery>>
 
-    @GET("?per_page=25")
-    fun getBreweriesByCity(@Query("page") page: Int, @Query("by_city") city: String): Call<List<Brewery>>
+    @GET("?per_page=50")
+    fun getBreweriesByCity( @Query("by_city") city: String): Call<List<Brewery>>
 
-    @GET("?per_page=25")
-    fun getBreweriesByState(@Query("page") page: Int, @Query("by_state") state: String): Call<List<Brewery>>
+    @GET("?per_page=50")
+    fun getBreweriesByState( @Query("by_state") state: String): Call<List<Brewery>>
 
-    @GET("?per_page=25")
-    fun getBreweriesByName(@Query("page") page: Int, @Query("by_name") name: String): Call<List<Brewery>>
+    @GET("?per_page=50")
+    fun getBreweriesByName( @Query("by_name") name: String): Call<List<Brewery>>
+
+    @GET("/{id}")
+    fun getBreweryById(@Path("id") id: Int): Call<Brewery>
 
     companion object {
 

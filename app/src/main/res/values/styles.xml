@@ -10,7 +10,7 @@
     </style>
 
     <style name="CustomTextStyle" parent="Widget.AppCompat.TextView">
-        <item name="android:textAppearance">@style/ItalicTextAppearance</item>
+        <item name="android:textAppearance">@style/RegularTextAppearance</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/black_open</item>
     </style>
