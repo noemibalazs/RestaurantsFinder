@@ -13,6 +13,6 @@ data class Brewery(
     @field:SerializedName("longitude") val longitude: String,
     @field:SerializedName("latitude") val latitude: String,
     @field:SerializedName("phone") val phone: String,
-    @field:SerializedName("website_url") val site: String,
-    @field:SerializedName("updated_at") val updated: String
+    @field:SerializedName("website_url") val website_url: String,
+    @field:SerializedName("updated_at") val updated_at: String
 )

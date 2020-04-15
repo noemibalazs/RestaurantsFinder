@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.restaurantsfinder.R
-import com.example.restaurantsfinder.breweryviewmodel.BreweryViewModel
+import com.example.restaurantsfinder.breweries.BreweryViewModel
 import com.example.restaurantsfinder.data.Brewery
 import com.example.restaurantsfinder.databinding.ViewItemBreweryBinding
 

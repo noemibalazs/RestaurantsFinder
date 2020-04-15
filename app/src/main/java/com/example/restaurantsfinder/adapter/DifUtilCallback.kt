@@ -16,6 +16,6 @@ class DifUtilCallback : DiffUtil.ItemCallback<Brewery>() {
                 oldItem.state == newItem.state &&
                 oldItem.latitude == newItem.latitude &&
                 oldItem.longitude == newItem.longitude &&
-                oldItem.site == newItem.site
+                oldItem.website_url == newItem.website_url
     }
 }

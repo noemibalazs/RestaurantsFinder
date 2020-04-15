@@ -11,6 +11,7 @@
 
     <style name="HandTextAppearance" parent="TextAppearance.AppCompat">
         <item name="android:fontFamily">@font/arizonia</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
     </style>

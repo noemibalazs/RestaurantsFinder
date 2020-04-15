@@ -1,7 +1,13 @@
 <resources>
-    <string name="app_name">Restaurants Finder</string>
+    <string name="app_name">Brewery Finder</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="name">Name: %s</string>
     <string name="street"> Street: %s</string>
-    <string name="city_state">%s %s</string>
-    <string name="phone">Phone: %s</string>
+    <string name="city_state">%s - %s</string>
+    <string name="menu_breweries">Breweries</string>
+    <string name="menu_name">Breweries by name</string>
+    <string name="menu_state">Breweries by state</string>
+    <string name="menu_city">Breweries by city</string>
+    <string name="empty_info">Something went wrong!\nVerify your internet connection and try it again!</string>
 </resources>

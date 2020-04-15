@@ -17,8 +17,8 @@ class BreweryMapper {
             longitude = model.longitude,
             latitude = model.latitude,
             phone = model.phone,
-            site = model.site,
-            updated = model.updated
+            site = model.website_url,
+            updated = model.updated_at
         )
     }
 
@@ -34,8 +34,8 @@ class BreweryMapper {
             longitude = entity.longitude,
             latitude = entity.latitude,
             phone = entity.phone,
-            site = entity.site,
-            updated = entity.updated
+            website_url = entity.site,
+            updated_at = entity.updated
         )
     }
 }

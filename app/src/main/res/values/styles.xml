@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -9,10 +9,25 @@
         <item name="android:textViewStyle">@style/CustomTextStyle</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="MySplashStyle" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/logo</item>
+    </style>
+
     <style name="CustomTextStyle" parent="Widget.AppCompat.TextView">
         <item name="android:textAppearance">@style/RegularTextAppearance</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/black_open</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

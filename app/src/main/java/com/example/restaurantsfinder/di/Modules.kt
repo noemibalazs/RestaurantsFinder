@@ -1,6 +1,6 @@
 package com.example.restaurantsfinder.di
 
-import com.example.restaurantsfinder.breweryviewmodel.BreweryViewModel
+import com.example.restaurantsfinder.breweries.BreweryViewModel
 import com.example.restaurantsfinder.datasource.*
 import com.example.restaurantsfinder.helper.BreweryMapper
 import com.example.restaurantsfinder.helper.SharedPrefHelper
@@ -46,9 +46,11 @@ val breweryModule = module {
 }
 
 val breweryViewModel = module {
-    viewModel { BreweryViewModel(
-        breweryRepository = get()
-    ) }
+    viewModel {
+        BreweryViewModel(
+            breweryRepository = get()
+        )
+    }
 }
 
 val sharedModule = module {

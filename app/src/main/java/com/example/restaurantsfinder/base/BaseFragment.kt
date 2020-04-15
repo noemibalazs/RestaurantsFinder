@@ -9,9 +9,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.restaurantsfinder.R
 
-abstract class BaseFragment<VM: BaseViewModel> : Fragment() {
+abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
 
-    private var viewModel: VM ?= null
+    private var viewModel: VM? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -20,7 +20,7 @@ abstract class BaseFragment<VM: BaseViewModel> : Fragment() {
 
     protected abstract fun initViewModel(): VM
 
-    protected fun setUpToolbar(toolbar: Toolbar, @StringRes title: Int){
+    protected fun setUpToolbar(toolbar: Toolbar, @StringRes title: Int) {
         (activity as AppCompatActivity?)?.let {
             it.setSupportActionBar(toolbar)
             it.supportActionBar.let {

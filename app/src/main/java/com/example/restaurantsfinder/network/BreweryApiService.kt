@@ -16,19 +16,19 @@ import retrofit2.http.Query
 
 interface BreweryApiService {
 
-    @GET("?per_page=50")
+    @GET("breweries?per_page=50")
     fun getListOfBreweries(): Call<List<Brewery>>
 
-    @GET("?per_page=50")
+    @GET("breweries?per_page=50")
     fun getBreweriesByCity( @Query("by_city") city: String): Call<List<Brewery>>
 
-    @GET("?per_page=50")
+    @GET("breweries?per_page=50")
     fun getBreweriesByState( @Query("by_state") state: String): Call<List<Brewery>>
 
-    @GET("?per_page=50")
+    @GET("breweries?per_page=50")
     fun getBreweriesByName( @Query("by_name") name: String): Call<List<Brewery>>
 
-    @GET("/{id}")
+    @GET("breweries/{id}")
     fun getBreweryById(@Path("id") id: Int): Call<Brewery>
 
     companion object {
