@@ -30,4 +30,9 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="android:textColor">@color/black_open</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
 </resources>

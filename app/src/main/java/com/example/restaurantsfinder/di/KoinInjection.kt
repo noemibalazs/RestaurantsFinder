@@ -18,12 +18,15 @@ class KoinInjection {
 
             fun getSharedPrefModule() = listOf(sharedModule)
 
+            fun getBreweryDetails() = listOf(breweryDetailsModule)
+
             return mutableListOf<Module>().apply {
                 addAll(getNetworkModule())
                 addAll(getDataBaseModule())
                 addAll(getBreweryModule())
                 addAll(getBreweryVM())
                 addAll(getSharedPrefModule())
+                addAll(getBreweryDetails())
             }
         }
     }

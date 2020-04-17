@@ -1,5 +1,5 @@
 package com.example.restaurantsfinder.adapter
 
 interface BreweryClickListener {
-    fun onBreweryClicked(id: Int)
+    fun onBreweryClicked(id: Int, name:String)
 }

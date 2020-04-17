@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
@@ -21,9 +22,13 @@ class BreweryLandingActivity : BaseActivity<BaseViewModel>(),
         return ViewModelProviders.of(this).get(BaseViewModel::class.java)
     }
 
+    var myToolbar: Toolbar? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_brewery_landing)
+
+        myToolbar = toolBar
 
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolBar,

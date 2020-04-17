@@ -28,4 +28,8 @@ class BreweryAdapter(
     override fun onBindViewHolder(holder: BreweryVH, position: Int) {
         holder.onBind(getItem(position))
     }
+
+    fun removeListener() {
+        breweryListener = null
+    }
 }

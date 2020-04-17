@@ -52,8 +52,4 @@ class BreweryViewModel(
     private fun onRemoteFailure(failure: Failure) {
         Logger.e("Error getting remote breweries, see the failure message: ${failure.message}")
     }
-
-    fun onBreweryClicked(id: Int){
-
-    }
 }

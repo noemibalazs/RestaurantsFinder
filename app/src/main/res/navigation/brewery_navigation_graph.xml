@@ -7,8 +7,23 @@
 
     <fragment
         android:id="@+id/breweriesFragment"
-        android:name="com.example.restaurantsfinder.breweries.FragmentBreweries"
         android:label="@string/menu_breweries"
-        tools:layout="@layout/fragment_breweries" />
+        android:name="com.example.restaurantsfinder.breweries.FragmentBreweries"
+        tools:layout="@layout/fragment_breweries">
+
+        <action
+            android:id="@+id/navigateFromBreweriesToDetails"
+            app:destination="@id/breweryDetails"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/breweryDetails"
+        android:name="com.example.restaurantsfinder.details.FragmentBreweryDetails"
+        tools:layout="@layout/fragment_brewery_details" />
 
 </navigation>

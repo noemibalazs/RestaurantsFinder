@@ -4,25 +4,36 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.restaurantsfinder.R
 import com.example.restaurantsfinder.adapter.BreweryAdapter
 import com.example.restaurantsfinder.adapter.BreweryClickListener
 import com.example.restaurantsfinder.base.BaseFragment
+import com.example.restaurantsfinder.data.Brewery
 import com.example.restaurantsfinder.databinding.FragmentBreweriesBinding
+import com.example.restaurantsfinder.helper.ACTION_KEY
+import com.example.restaurantsfinder.helper.SharedPrefHelper
 import org.koin.android.ext.android.inject
 
 class FragmentBreweries : BaseFragment<BreweryViewModel>() {
 
     private val viewModel: BreweryViewModel by inject()
+    private val sharedPrefHelper: SharedPrefHelper by inject()
 
     private lateinit var binding: FragmentBreweriesBinding
     private lateinit var breweryAdapter: BreweryAdapter
 
     private val breweryClickListener = object : BreweryClickListener {
-        override fun onBreweryClicked(id: Int) {
-            viewModel.onBreweryClicked(id)
+        override fun onBreweryClicked(id: Int, name: String) {
+            sharedPrefHelper.saveBreweryId(id)
+            findNavController().navigate(
+                R.id.navigateFromBreweriesToDetails,
+                bundleOf(ACTION_KEY to name)
+            )
         }
     }
 
@@ -57,8 +68,17 @@ class FragmentBreweries : BaseFragment<BreweryViewModel>() {
     private fun setObservers() {
         viewModel.mutableBreweriesLiveData.observe(viewLifecycleOwner, Observer {
             breweryAdapter.submitList(it)
+            shouldShowOrHideEmptyContainer(it)
         })
     }
 
+    private fun shouldShowOrHideEmptyContainer(listBreweries: List<Brewery>) {
+        binding.rvBreweries.isVisible = !listBreweries.isNullOrEmpty()
+        binding.clEmptyContainer.isVisible = listBreweries.isNullOrEmpty()
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        breweryAdapter.removeListener()
+    }
 }

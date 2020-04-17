@@ -25,7 +25,7 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
             it.setSupportActionBar(toolbar)
             it.supportActionBar.let {
                 it?.setDisplayHomeAsUpEnabled(true)
-                it?.setHomeAsUpIndicator(R.drawable.ic_back)
+                it?.setHomeAsUpIndicator(R.drawable.back)
                 it?.title = getString(title)
             }
         }

@@ -23,7 +23,7 @@
             tools:listitem="@layout/view_item_brewery" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_empty_list"
+            android:id="@+id/cl_empty_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone">

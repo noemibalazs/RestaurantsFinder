@@ -10,4 +10,5 @@
     <string name="menu_state">Breweries by state</string>
     <string name="menu_city">Breweries by city</string>
     <string name="empty_info">Something went wrong!\nVerify your internet connection and try it again!</string>
+    <string name="details_title">%s\'s details</string>
 </resources>

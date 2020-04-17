@@ -2,6 +2,7 @@ package com.example.restaurantsfinder.di
 
 import com.example.restaurantsfinder.breweries.BreweryViewModel
 import com.example.restaurantsfinder.datasource.*
+import com.example.restaurantsfinder.details.BreweryDetailsViewModel
 import com.example.restaurantsfinder.helper.BreweryMapper
 import com.example.restaurantsfinder.helper.SharedPrefHelper
 import com.example.restaurantsfinder.network.BreweryApiService
@@ -55,4 +56,13 @@ val breweryViewModel = module {
 
 val sharedModule = module {
     single { SharedPrefHelper(androidApplication().applicationContext) }
+}
+
+val breweryDetailsModule = module {
+    viewModel {
+        BreweryDetailsViewModel(
+            breweryRepository = get(),
+            sharedPrefHelper = get()
+        )
+    }
 }

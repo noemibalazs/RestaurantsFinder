@@ -16,8 +16,9 @@ class SingleLiveData<T> : MutableLiveData<T>() {
         if (hasActiveObservers())
             Logger.d("Many observer are registered but only one will be notified on changes")
         super.observe(owner, Observer {
-            if (pending.compareAndSet(true, false))
+            if (pending.compareAndSet(true, false)) {
                 observer.onChanged(it)
+            }
         })
     }
 
@@ -25,5 +26,10 @@ class SingleLiveData<T> : MutableLiveData<T>() {
     override fun setValue(value: T) {
         pending.set(true)
         super.setValue(value)
+    }
+
+    @MainThread
+    fun call() {
+        value == null
     }
 }

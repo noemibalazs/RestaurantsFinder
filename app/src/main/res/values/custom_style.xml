@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="ItalicTextAppearance" parent="TextAppearance.AppCompat">
        <item name="android:fontFamily">@font/americana_italic</item>
+        <item name="android:textColor">@color/blue_grey</item>
+        <item name="android:padding">4dp</item>
     </style>
 
     <style name="RegularTextAppearance" parent="TextAppearance.AppCompat">

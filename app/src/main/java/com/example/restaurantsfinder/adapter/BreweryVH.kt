@@ -1,10 +1,12 @@
 package com.example.restaurantsfinder.adapter
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurantsfinder.R
 import com.example.restaurantsfinder.breweries.BreweryViewModel
 import com.example.restaurantsfinder.data.Brewery
 import com.example.restaurantsfinder.databinding.ViewItemBreweryBinding
+import com.example.restaurantsfinder.helper.DebounceClickListener
 
 class BreweryVH(
     private val binding: ViewItemBreweryBinding,
@@ -22,11 +24,11 @@ class BreweryVH(
             tvState.text = context.getString(R.string.city_state, brewery.city, brewery.state)
             tvSite.text = brewery.website_url
 
-            clContainer.setOnClickListener {
-                breweryClickListener?.onBreweryClicked(brewery.id)
-            }
+            clContainer.setOnClickListener(object : DebounceClickListener() {
+                override fun onDebounce(view: View) {
+                    breweryClickListener?.onBreweryClicked(brewery.id, brewery.name)
+                }
+            })
         }
-
     }
-
 }
