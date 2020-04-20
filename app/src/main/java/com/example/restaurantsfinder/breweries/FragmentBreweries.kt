@@ -13,7 +13,6 @@ import com.example.restaurantsfinder.R
 import com.example.restaurantsfinder.adapter.BreweryAdapter
 import com.example.restaurantsfinder.adapter.BreweryClickListener
 import com.example.restaurantsfinder.base.BaseFragment
-import com.example.restaurantsfinder.data.Brewery
 import com.example.restaurantsfinder.databinding.FragmentBreweriesBinding
 import com.example.restaurantsfinder.helper.ACTION_KEY
 import com.example.restaurantsfinder.helper.SharedPrefHelper
@@ -68,13 +67,16 @@ class FragmentBreweries : BaseFragment<BreweryViewModel>() {
     private fun setObservers() {
         viewModel.mutableBreweriesLiveData.observe(viewLifecycleOwner, Observer {
             breweryAdapter.submitList(it)
-            shouldShowOrHideEmptyContainer(it)
+        })
+
+        viewModel.mutableFailureError.observe(viewLifecycleOwner, Observer {
+            shouldShowOrHideEmptyContainer()
         })
     }
 
-    private fun shouldShowOrHideEmptyContainer(listBreweries: List<Brewery>) {
-        binding.rvBreweries.isVisible = !listBreweries.isNullOrEmpty()
-        binding.clEmptyContainer.isVisible = listBreweries.isNullOrEmpty()
+    private fun shouldShowOrHideEmptyContainer() {
+        binding.rvBreweries.isVisible = false
+        binding.clEmptyContainer.isVisible = true
     }
 
     override fun onDestroy() {

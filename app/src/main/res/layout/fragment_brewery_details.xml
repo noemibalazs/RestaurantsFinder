@@ -111,7 +111,6 @@
                 app:layout_constraintTop_toBottomOf="@id/cl_brewery_details"
                 tools:background="@color/colorPrimary" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

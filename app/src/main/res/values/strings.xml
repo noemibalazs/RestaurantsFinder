@@ -11,4 +11,7 @@
     <string name="menu_city">Breweries by city</string>
     <string name="empty_info">Something went wrong!\nVerify your internet connection and try it again!</string>
     <string name="details_title">%s\'s details</string>
+    <string name="toast_error">Hey, try it again!</string>
+    <string name="toast_grant_message">In order to use the google maps services first need to grant the access fine location</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

@@ -27,6 +27,7 @@ class BreweryVH(
             clContainer.setOnClickListener(object : DebounceClickListener() {
                 override fun onDebounce(view: View) {
                     breweryClickListener?.onBreweryClicked(brewery.id, brewery.name)
+                    breweryViewModel.addBreweryToDB(brewery)
                 }
             })
         }

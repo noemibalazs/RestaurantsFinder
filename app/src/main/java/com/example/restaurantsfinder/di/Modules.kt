@@ -49,7 +49,8 @@ val breweryModule = module {
 val breweryViewModel = module {
     viewModel {
         BreweryViewModel(
-            breweryRepository = get()
+            breweryRepository = get(),
+            breweryMapper = get()
         )
     }
 }

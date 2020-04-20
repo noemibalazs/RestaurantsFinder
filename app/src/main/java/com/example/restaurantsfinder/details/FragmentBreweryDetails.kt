@@ -1,7 +1,6 @@
 package com.example.restaurantsfinder.details
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.example.restaurantsfinder.base.BaseFragment
 import com.example.restaurantsfinder.data.Brewery
 import com.example.restaurantsfinder.databinding.FragmentBreweryDetailsBinding
 import com.example.restaurantsfinder.helper.ACTION_KEY
-import com.example.restaurantsfinder.helper.BreweryGPS
 import com.example.restaurantsfinder.ui.BreweryLandingActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
@@ -30,8 +28,7 @@ class FragmentBreweryDetails : BaseFragment<BreweryDetailsViewModel>(), OnMapRea
 
     private val viewModel: BreweryDetailsViewModel by inject()
     private lateinit var binding: FragmentBreweryDetailsBinding
-    private var handler = Handler()
-    private var runnable: Runnable? = null
+    private lateinit var mMap: GoogleMap
 
     override fun initViewModel(): BreweryDetailsViewModel {
         return viewModel
@@ -58,15 +55,13 @@ class FragmentBreweryDetails : BaseFragment<BreweryDetailsViewModel>(), OnMapRea
         val name = arguments?.getString(ACTION_KEY)
         (activity as BreweryLandingActivity).myToolbar?.title =
             getString(R.string.details_title, name)
+        setUpMap()
     }
 
     private fun observers() {
         viewModel.mutableBrewery.observe(viewLifecycleOwner, Observer {
             populateFields(it)
-        })
-
-        viewModel.mutableBreweryGPSPosition.observe(viewLifecycleOwner, Observer {
-            onGPSPositionChanged(it)
+            showBreweryOnMap(it, mMap)
         })
     }
 
@@ -78,14 +73,7 @@ class FragmentBreweryDetails : BaseFragment<BreweryDetailsViewModel>(), OnMapRea
         binding.tvPhone.text = brewery.phone
     }
 
-    private fun onGPSPositionChanged(breweryGPS: BreweryGPS) {
-        runnable = Runnable {
-            setUpGpsPosition()
-        }
-        handler.postDelayed(runnable, 350L)
-    }
-
-    private fun setUpGpsPosition() {
+    private fun setUpMap() {
 
         activity?.let { activity ->
 
@@ -103,37 +91,31 @@ class FragmentBreweryDetails : BaseFragment<BreweryDetailsViewModel>(), OnMapRea
                     mapFragment.getMapAsync(this)
                 }
             } else {
-                Toast.makeText(activity, "Hey, try it again!", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, getString(R.string.toast_error), Toast.LENGTH_LONG).show()
             }
         }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        viewModel.mutableBreweryGPSPosition.observe(viewLifecycleOwner, Observer { breweryGps ->
+        mMap = googleMap
+    }
+
+    private fun showBreweryOnMap(brewery: Brewery, google: GoogleMap?) {
+        google?.let {
             val markerOptions = MarkerOptions()
-            markerOptions.position(LatLng(breweryGps.lat, breweryGps.lng))
+            markerOptions.position(
+                LatLng(
+                    brewery.latitude.toDouble(),
+                    brewery.longitude.toDouble()
+                )
+            )
 
             val cameraPosition = CameraPosition.Builder()
-                .target(LatLng(breweryGps.lat, breweryGps.lng))
+                .target(LatLng(brewery.latitude.toDouble(), brewery.longitude.toDouble()))
                 .zoom(16f).build()
 
-            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-            googleMap.addMarker(markerOptions)
-
-            googleMap.uiSettings.isZoomControlsEnabled = false
-            googleMap.uiSettings.isZoomGesturesEnabled = false
-            googleMap.uiSettings.setAllGesturesEnabled(false)
-            googleMap.uiSettings.isMapToolbarEnabled = false
-
-            // Disable marker click
-            googleMap.setOnMarkerClickListener { true }
-        })
+            it.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+            it.addMarker(markerOptions)
+        }
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        handler.removeCallbacks(runnable)
-        runnable = null
-    }
-
 }

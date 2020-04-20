@@ -23,13 +23,13 @@ class SingleLiveData<T> : MutableLiveData<T>() {
     }
 
     @MainThread
-    override fun setValue(value: T) {
+    override fun setValue(value: T?) {
         pending.set(true)
         super.setValue(value)
     }
 
     @MainThread
     fun call() {
-        value == null
+        value = null
     }
 }
