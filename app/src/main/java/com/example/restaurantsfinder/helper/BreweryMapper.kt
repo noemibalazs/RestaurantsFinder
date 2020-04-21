@@ -9,7 +9,7 @@ class BreweryMapper {
         return BreweryEntity(
             id = model.id,
             name = model.name,
-            breweryType = model.breweryType,
+            brewery_type = model.brewery_type,
             street = model.street,
             city = model.city,
             state = model.state,
@@ -26,7 +26,7 @@ class BreweryMapper {
         return Brewery(
             id = entity.id,
             name = entity.name,
-            breweryType = entity.breweryType,
+            brewery_type = entity.brewery_type,
             street = entity.street,
             city = entity.city,
             state = entity.state,

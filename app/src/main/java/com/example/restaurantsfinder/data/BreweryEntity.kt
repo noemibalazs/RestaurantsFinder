@@ -10,7 +10,7 @@ data class BreweryEntity(
     @PrimaryKey
     @field:SerializedName("id") val id: Int,
     @field:SerializedName("name") val name: String,
-    @field:SerializedName("brewery_type") val breweryType: String,
+    @field:SerializedName("brewery_type") val brewery_type: String,
     @field:SerializedName("street") val street: String,
     @field:SerializedName("city") val city: String,
     @field:SerializedName("state") val state: String,

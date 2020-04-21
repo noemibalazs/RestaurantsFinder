@@ -14,4 +14,7 @@
     <string name="toast_error">Hey, try it again!</string>
     <string name="toast_grant_message">In order to use the google maps services first need to grant the access fine location</string>
     <string name="title_activity_maps">Map</string>
+    <string name="hint_city">Search breweries by city</string>
+    <string name="hint_name">Search breweries by name</string>
+    <string name="hint_state">Search breweries by state</string>
 </resources>

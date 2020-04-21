@@ -1,6 +1,7 @@
 package com.example.restaurantsfinder.di
 
 import com.example.restaurantsfinder.breweries.BreweryViewModel
+import com.example.restaurantsfinder.city.BreweriesByCityViewModel
 import com.example.restaurantsfinder.datasource.*
 import com.example.restaurantsfinder.details.BreweryDetailsViewModel
 import com.example.restaurantsfinder.helper.BreweryMapper
@@ -9,6 +10,7 @@ import com.example.restaurantsfinder.network.BreweryApiService
 import com.example.restaurantsfinder.room.BreweryDAO
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.context.GlobalContext.get
 import org.koin.dsl.module
 
 val breweryDataBase = module {
@@ -66,4 +68,12 @@ val breweryDetailsModule = module {
             sharedPrefHelper = get()
         )
     }
+}
+
+val breweriesByCityViewModule = module {
+   viewModel {
+       BreweriesByCityViewModel(
+           breweryRepository = get()
+       )
+   }
 }
