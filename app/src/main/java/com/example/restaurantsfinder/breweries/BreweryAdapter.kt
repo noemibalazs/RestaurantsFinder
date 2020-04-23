@@ -1,11 +1,12 @@
-package com.example.restaurantsfinder.adapter
+package com.example.restaurantsfinder.breweries
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.restaurantsfinder.R
-import com.example.restaurantsfinder.breweries.BreweryViewModel
+import com.example.restaurantsfinder.adapterhelper.BreweryClickListener
+import com.example.restaurantsfinder.adapterhelper.DifUtilCallback
 import com.example.restaurantsfinder.data.Brewery
 import com.example.restaurantsfinder.databinding.ViewItemBreweryBinding
 

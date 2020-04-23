@@ -18,27 +18,41 @@
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_searched_by_city"
             android:text="@={viewModel.mutableCityName}"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:maxLines="1"
             android:layout_height="wrap_content"
             android:hint="@string/hint_city"
             android:padding="6dp"
             android:textColorHint="@color/blue_grey"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/iv_done"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_done"
+            android:contentDescription="@null"
+            android:src="@drawable/done"
+            android:padding="6dp"
+            android:background="?attr/selectableItemBackground"
+            android:onClick="@{ () -> viewModel.onDoneClicked()}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_breweries"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="20dp"
+            android:clipToPadding="false"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_searched_by_city"
-            tools:listitem="@layout/view_item_brewery" />
+            />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_empty_container"

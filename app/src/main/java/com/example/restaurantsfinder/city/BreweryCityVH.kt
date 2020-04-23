@@ -1,21 +1,24 @@
-package com.example.restaurantsfinder.base
+package com.example.restaurantsfinder.city
 
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurantsfinder.R
-import com.example.restaurantsfinder.adapter.BreweryClickListener
+import com.example.restaurantsfinder.adapterhelper.BreweryClickListener
 import com.example.restaurantsfinder.data.Brewery
-import com.example.restaurantsfinder.databinding.ViewItemBaseBinding
+import com.example.restaurantsfinder.databinding.ViewItemBaseCityBinding
 import com.example.restaurantsfinder.helper.DebounceClickListener
+import java.util.logging.Logger
 
-class BaseVH(
-    val binding: ViewItemBaseBinding,
-    private val baseViewModel: BaseViewModel,
+class BreweryCityVH(
+    private val binding: ViewItemBaseCityBinding,
+    private val breweriesByCityViewModel: BreweriesByCityViewModel,
     private val breweryClickListener: BreweryClickListener?
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(brewery: Brewery) {
-        binding.viewModel = baseViewModel
+    fun onBind(brewery: Brewery) {
+
+        binding.viewModel = breweriesByCityViewModel
         binding.apply {
             val context = binding.root.context
             tvName.text = context.getString(R.string.name, brewery.name)
@@ -26,6 +29,8 @@ class BaseVH(
             clContainer.setOnClickListener(object : DebounceClickListener() {
                 override fun onDebounce(view: View) {
                     breweryClickListener?.onBreweryClicked(brewery.id, brewery.name)
+                    breweriesByCityViewModel.addBreweryToDB(brewery)
+                    Log.d("BCVH", "The site of brewery is: ${brewery.website_url}")
                 }
             })
         }

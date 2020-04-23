@@ -1,4 +1,4 @@
-package com.example.restaurantsfinder.adapter
+package com.example.restaurantsfinder.adapterhelper
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.restaurantsfinder.data.Brewery

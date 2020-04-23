@@ -1,39 +1,102 @@
 package com.example.restaurantsfinder.city
 
-import androidx.databinding.Observable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.restaurantsfinder.base.BaseViewModel
+import com.example.restaurantsfinder.base.SingleLiveData
+import com.example.restaurantsfinder.core.Failure
+import com.example.restaurantsfinder.core.Success
 import com.example.restaurantsfinder.data.Brewery
+import com.example.restaurantsfinder.data.BreweryEntity
 import com.example.restaurantsfinder.datasource.BreweryRepository
+import com.example.restaurantsfinder.helper.BreweryMapper
+import com.orhanobut.logger.Logger
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
+import kotlinx.coroutines.withContext
 
 class BreweriesByCityViewModel(
-    val breweryRepository: BreweryRepository
+    val breweryRepository: BreweryRepository,
+    val breweryMapper: BreweryMapper
 ) : BaseViewModel() {
 
-    val mutableCityName = ObservableField<String>()
-    private var _mutableBreweryCityList = MutableLiveData<Brewery>()
-    val mutableBreweryCityList: LiveData<Brewery>
+    val mutableCityName = ObservableField<String>("")
+    val mutableFailureError = SingleLiveData<Any>()
+    private var _mutableBreweryCityList = MutableLiveData<List<Brewery>>()
+    val mutableBreweryCityList: LiveData<List<Brewery>>
         get() = _mutableBreweryCityList
 
-    val mutablePropertyChangeListener = object : Observable.OnPropertyChangedCallback() {
-        override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
 
+    fun onDoneClicked() {
+        Logger.d("On done button is clicked")
+        loadBreweriesByCity()
+    }
+
+    private fun loadBreweriesByCity() {
+        val jobId = launch {
+            val result = breweryRepository.breweryRemoteDataSource.getBreweriesByCity(
+                mutableCityName.get() ?: return@launch
+            )
+            withContext(Dispatchers.Main) {
+                result.either(
+                    { failure -> onRemoteBreweriesByCityLoaded(failure, null) },
+                    { list: List<Brewery> -> onRemoteBreweriesByCityLoaded(null, list) }
+                )
+            }
+        }
+
+        addJob(jobId)
+    }
+
+    private fun onRemoteBreweriesByCityLoaded(failure: Failure?, breweries: List<Brewery>?) {
+        Logger.d("onRemoteBreweriesByCityLoaded throw: $failure - size: ${breweries?.size}")
+
+        failure?.let {
+            onRemoteFailure(it)
+        }
+        breweries?.let {
+            onRemoteSuccess(it)
         }
     }
 
-    init {
-
+    private fun onRemoteFailure(failure: Failure) {
+        Logger.d("Error getting remote breweries by city name, see the failure message: ${failure.message}")
+        mutableFailureError.call()
     }
 
-    private fun loadCity(city: String){
-        val joId = launch {
-            val result = breweryRepository.breweryRemoteDataSource.getBreweriesByCity(city)
+    private fun onRemoteSuccess(list: List<Brewery>) {
+        Logger.d("Success getting the list of breweries: ${list.size}")
+        _mutableBreweryCityList.value = list
+        mutableCityName.set("")
+    }
+
+    fun addBreweryToDB(brewery: Brewery) {
+
+        val jobId = launch {
+            val entity: BreweryEntity = breweryMapper.mapModelToEntity(brewery)
+            val result = breweryRepository.breweryLocalDataSource.addBrewery(entity)
+            withContext(Dispatchers.Main) {
+                result.either(
+                    { failure -> onAddingBreweryEntityResponse(failure, null) },
+                    { success -> onAddingBreweryEntityResponse(null, success) }
+                )
+            }
+        }
+        addJob(jobId)
+    }
+
+    private fun onAddingBreweryEntityResponse(failure: Failure?, success: Success?) {
+        Logger.d("On adding brewery entity to database throw: $failure - success: $success")
+
+        failure?.let {
+            Logger.d("Error saving entity to database, see the failure message: ${failure.message}")
+        }
+
+        success?.let {
+            Logger.d("Success saving entity into database.")
         }
     }
 
-    fun addBreweryToDB(brewery: Brewery){}
+
 }

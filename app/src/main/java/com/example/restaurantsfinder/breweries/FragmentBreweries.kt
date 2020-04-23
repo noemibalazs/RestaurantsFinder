@@ -10,8 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.restaurantsfinder.R
-import com.example.restaurantsfinder.adapter.BreweryAdapter
-import com.example.restaurantsfinder.adapter.BreweryClickListener
+import com.example.restaurantsfinder.adapterhelper.BreweryClickListener
 import com.example.restaurantsfinder.base.BaseFragment
 import com.example.restaurantsfinder.databinding.FragmentBreweriesBinding
 import com.example.restaurantsfinder.helper.ACTION_KEY

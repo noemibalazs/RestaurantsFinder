@@ -71,9 +71,10 @@ val breweryDetailsModule = module {
 }
 
 val breweriesByCityViewModule = module {
-   viewModel {
-       BreweriesByCityViewModel(
-           breweryRepository = get()
-       )
-   }
+    viewModel {
+        BreweriesByCityViewModel(
+            breweryRepository = get(),
+            breweryMapper = get()
+        )
+    }
 }

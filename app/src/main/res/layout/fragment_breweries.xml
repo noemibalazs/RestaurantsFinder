@@ -17,7 +17,7 @@
             android:id="@+id/rv_breweries"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="true"
+            android:clipToPadding="false"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/view_item_brewery" />

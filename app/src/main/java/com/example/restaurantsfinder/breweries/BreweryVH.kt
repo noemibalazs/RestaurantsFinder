@@ -1,9 +1,9 @@
-package com.example.restaurantsfinder.adapter
+package com.example.restaurantsfinder.breweries
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurantsfinder.R
-import com.example.restaurantsfinder.breweries.BreweryViewModel
+import com.example.restaurantsfinder.adapterhelper.BreweryClickListener
 import com.example.restaurantsfinder.data.Brewery
 import com.example.restaurantsfinder.databinding.ViewItemBreweryBinding
 import com.example.restaurantsfinder.helper.DebounceClickListener
