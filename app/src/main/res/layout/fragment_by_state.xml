@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.restaurantsfinder.city.BreweriesByCityViewModel" />
+            type="com.example.restaurantsfinder.state.BreweriesByStateViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,14 +15,13 @@
         android:layout_margin="20dp">
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_searched_by_city"
+            android:id="@+id/et_searched_by_state"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_city"
-            android:inputType="text"
+            android:hint="@string/hint_state"
             android:maxLines="1"
             android:padding="6dp"
-            android:text="@={viewModel.mutableCityName}"
+            android:text="@={viewModel.mutableStateName}"
             android:textColorHint="@color/blue_grey"
             app:layout_constraintEnd_toStartOf="@id/iv_done"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +50,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_searched_by_city" />
+            app:layout_constraintTop_toBottomOf="@id/et_searched_by_state" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_empty_container"

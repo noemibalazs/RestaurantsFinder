@@ -1,4 +1,4 @@
-package com.example.restaurantsfinder.city
+package com.example.restaurantsfinder.state
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
@@ -8,7 +8,6 @@ import com.example.restaurantsfinder.base.SingleLiveData
 import com.example.restaurantsfinder.core.Failure
 import com.example.restaurantsfinder.core.Success
 import com.example.restaurantsfinder.data.Brewery
-import com.example.restaurantsfinder.data.BreweryEntity
 import com.example.restaurantsfinder.datasource.BreweryRepository
 import com.example.restaurantsfinder.helper.BreweryMapper
 import com.orhanobut.logger.Logger
@@ -16,40 +15,38 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class BreweriesByCityViewModel(
-    val breweryRepository: BreweryRepository,
-    val breweryMapper: BreweryMapper
+class BreweriesByStateViewModel(
+    private val breweryRepository: BreweryRepository,
+    private val breweryMapper: BreweryMapper
 ) : BaseViewModel() {
 
-    val mutableCityName = ObservableField<String>("")
+    val mutableStateName = ObservableField<String>("")
     val mutableFailureError = SingleLiveData<Any>()
-    private var _mutableBreweryCityList = MutableLiveData<List<Brewery>>()
-    val mutableBreweryCityList: LiveData<List<Brewery>>
-        get() = _mutableBreweryCityList
-
+    private val _mutableBreweriesByState = MutableLiveData<List<Brewery>>()
+    val mutableBreweriesByState: LiveData<List<Brewery>>
+        get() = _mutableBreweriesByState
 
     fun onDoneClicked() {
         Logger.d("On done button is clicked")
-        loadBreweriesByCity()
+        loadBreweriesByState()
     }
 
-    private fun loadBreweriesByCity() {
+    private fun loadBreweriesByState() {
         val jobId = launch {
-            val result = breweryRepository.breweryRemoteDataSource.getBreweriesByCity(
-                mutableCityName.get() ?: return@launch
+            val result = breweryRepository.breweryRemoteDataSource.getBreweriesByState(
+                mutableStateName.get() ?: return@launch
             )
             withContext(Dispatchers.Main) {
                 result.either(
-                    { failure -> onRemoteBreweriesByCityLoaded(failure, null) },
-                    { list: List<Brewery> -> onRemoteBreweriesByCityLoaded(null, list) }
+                    { failure -> onRemoteBreweriesByStateLoaded(failure, null) },
+                    { list: List<Brewery> -> onRemoteBreweriesByStateLoaded(null, list) }
                 )
             }
         }
-
         addJob(jobId)
     }
 
-    private fun onRemoteBreweriesByCityLoaded(failure: Failure?, breweries: List<Brewery>?) {
+    private fun onRemoteBreweriesByStateLoaded(failure: Failure?, breweries: List<Brewery>?) {
         Logger.d("onRemoteBreweriesByCityLoaded throw: $failure - size: ${breweries?.size}")
 
         failure?.let {
@@ -61,20 +58,20 @@ class BreweriesByCityViewModel(
     }
 
     private fun onRemoteFailure(failure: Failure) {
-        Logger.d("Error getting remote breweries by city name, see the failure message: ${failure.message}")
+        Logger.d("Error getting remote breweries by state name, see the failure message: ${failure.message}")
         mutableFailureError.call()
     }
 
     private fun onRemoteSuccess(list: List<Brewery>) {
         Logger.d("Success getting the list of breweries: ${list.size}")
-        _mutableBreweryCityList.value = list
-        mutableCityName.set("")
+        _mutableBreweriesByState.value = list
+        mutableStateName.set("")
     }
 
     fun addBreweryToDB(brewery: Brewery) {
 
         val jobId = launch {
-            val entity: BreweryEntity = breweryMapper.mapModelToEntity(brewery)
+            val entity = breweryMapper.mapModelToEntity(brewery)
             val result = breweryRepository.breweryLocalDataSource.addBrewery(entity)
             withContext(Dispatchers.Main) {
                 result.either(
@@ -83,6 +80,7 @@ class BreweriesByCityViewModel(
                 )
             }
         }
+
         addJob(jobId)
     }
 
@@ -97,4 +95,5 @@ class BreweriesByCityViewModel(
             Logger.d("Success saving entity into database.")
         }
     }
+
 }

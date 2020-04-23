@@ -62,9 +62,9 @@ class BreweryLandingActivity : BaseActivity<BaseViewModel>(),
                 findNavController(R.id.nav_host_fragment).navigate(R.id.breweriesByCity)
             }
 
-//            R.id.navPolitics -> {
-//                findNavController(R.id.nav_host_fragment).navigate(R.id.politicsFragment)
-//            }
+            R.id.navBreweryState -> {
+                findNavController(R.id.nav_host_fragment).navigate(R.id.breweriesByState)
+            }
 //
 //            R.id.navVisited -> {
 //                findNavController(R.id.nav_host_fragment).navigate(R.id.visitedFragment)

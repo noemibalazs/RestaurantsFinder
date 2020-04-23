@@ -1,4 +1,4 @@
-package com.example.restaurantsfinder.city
+package com.example.restaurantsfinder.state
 
 import android.app.Activity
 import android.os.Bundle
@@ -14,31 +14,30 @@ import androidx.navigation.fragment.findNavController
 import com.example.restaurantsfinder.R
 import com.example.restaurantsfinder.adapterhelper.BreweryClickListener
 import com.example.restaurantsfinder.base.BaseFragment
-import com.example.restaurantsfinder.databinding.FragmentByCityBinding
+import com.example.restaurantsfinder.databinding.FragmentByStateBinding
 import com.example.restaurantsfinder.helper.ACTION_KEY
 import com.example.restaurantsfinder.helper.SharedPrefHelper
 import org.koin.android.ext.android.inject
 
-class FragmentBreweriesByCity : BaseFragment<BreweriesByCityViewModel>() {
+class FragmentBreweriesByState : BaseFragment<BreweriesByStateViewModel>() {
 
-    private lateinit var binding: FragmentByCityBinding
-
-    private val viewModel: BreweriesByCityViewModel by inject()
+    private val viewModel: BreweriesByStateViewModel by inject()
     private val sharedPrefHelper: SharedPrefHelper by inject()
-    private lateinit var breweryCityAdapter: BreweryCityAdapter
+    private lateinit var binding: FragmentByStateBinding
+
+    private lateinit var breweriesByStateAdapter: BreweryStateAdapter
 
     private val clickListener = object : BreweryClickListener {
-
         override fun onBreweryClicked(id: Int, name: String) {
             sharedPrefHelper.saveBreweryId(id)
             findNavController().navigate(
-                R.id.navigateFromCityToDetails,
+                R.id.navigateFromStateToDetails,
                 bundleOf(ACTION_KEY to name)
             )
         }
     }
 
-    override fun initViewModel(): BreweriesByCityViewModel {
+    override fun initViewModel(): BreweriesByStateViewModel {
         return viewModel
     }
 
@@ -47,7 +46,7 @@ class FragmentBreweriesByCity : BaseFragment<BreweriesByCityViewModel>() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_by_city, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_by_state, container, false)
         return binding.root
     }
 
@@ -59,26 +58,27 @@ class FragmentBreweriesByCity : BaseFragment<BreweriesByCityViewModel>() {
 
     private fun initBinding() {
         binding.viewModel = viewModel
-        breweryCityAdapter = BreweryCityAdapter(viewModel).apply {
+        breweriesByStateAdapter = BreweryStateAdapter(viewModel).apply {
             this.breweryClickListener = clickListener
         }
-        binding.rvBreweries.adapter = breweryCityAdapter
+        binding.rvBreweries.adapter = breweriesByStateAdapter
         binding.rvBreweries.setHasFixedSize(true)
     }
 
     private fun setObserver() {
 
-        viewModel.mutableBreweryCityList.observe(viewLifecycleOwner, Observer {
-            breweryCityAdapter.submitList(it)
+        viewModel.mutableBreweriesByState.observe(viewLifecycleOwner, Observer {
+            breweriesByStateAdapter.submitList(it)
             hideSoftKeyBoard()
         })
 
         viewModel.mutableFailureError.observe(viewLifecycleOwner, Observer {
-            shouldShowOrHideEmptyContainer()
+            shouldShowOrHideEmptyLayout()
         })
     }
 
-    private fun shouldShowOrHideEmptyContainer() {
+
+    private fun shouldShowOrHideEmptyLayout() {
         binding.rvBreweries.isVisible = false
         binding.clEmptyContainer.isVisible = true
     }
@@ -86,11 +86,11 @@ class FragmentBreweriesByCity : BaseFragment<BreweriesByCityViewModel>() {
     private fun hideSoftKeyBoard() {
         val inputMethodManager =
             activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(binding.etSearchedByCity.windowToken, 0)
+        inputMethodManager.hideSoftInputFromWindow(binding.etSearchedByState.windowToken, 0)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        breweryCityAdapter.removeListener()
+        breweriesByStateAdapter.removeListener()
     }
 }
