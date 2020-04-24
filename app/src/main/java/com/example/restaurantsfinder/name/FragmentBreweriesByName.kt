@@ -1,9 +1,11 @@
-package com.example.restaurantsfinder.breweries
+package com.example.restaurantsfinder.name
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -12,30 +14,30 @@ import androidx.navigation.fragment.findNavController
 import com.example.restaurantsfinder.R
 import com.example.restaurantsfinder.adapterhelper.BreweryClickListener
 import com.example.restaurantsfinder.base.BaseFragment
-import com.example.restaurantsfinder.databinding.FragmentBreweriesBinding
+import com.example.restaurantsfinder.databinding.FragmentByNameBinding
 import com.example.restaurantsfinder.helper.ACTION_KEY
 import com.example.restaurantsfinder.helper.SharedPrefHelper
 import org.koin.android.ext.android.inject
 
-class FragmentBreweries : BaseFragment<BreweryViewModel>() {
+class FragmentBreweriesByName : BaseFragment<BreweriesByNameViewModel>() {
 
-    private val viewModel: BreweryViewModel by inject()
-    private val sharedPrefHelper: SharedPrefHelper by inject()
+    private val viewModel: BreweriesByNameViewModel by inject()
+    private val sharedPresentException: SharedPrefHelper by inject()
 
-    private lateinit var binding: FragmentBreweriesBinding
-    private lateinit var breweryAdapter: BreweryAdapter
+    private lateinit var binding: FragmentByNameBinding
+    private lateinit var breweryNameAdapter: BreweryNameAdapter
 
-    private val breweryClickListener = object : BreweryClickListener {
+    private val clickListener = object : BreweryClickListener {
         override fun onBreweryClicked(id: Int, name: String) {
-            sharedPrefHelper.saveBreweryId(id)
+            sharedPresentException.saveBreweryId(id)
             findNavController().navigate(
-                R.id.navigateFromBreweriesToDetails,
+                R.id.navigateFromNameToDetails,
                 bundleOf(ACTION_KEY to name)
             )
         }
     }
 
-    override fun initViewModel(): BreweryViewModel {
+    override fun initViewModel(): BreweriesByNameViewModel {
         return viewModel
     }
 
@@ -44,7 +46,7 @@ class FragmentBreweries : BaseFragment<BreweryViewModel>() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_breweries, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_by_name, container, false)
         return binding.root
     }
 
@@ -56,19 +58,20 @@ class FragmentBreweries : BaseFragment<BreweryViewModel>() {
 
     private fun initBinding() {
         binding.viewModel = viewModel
-        breweryAdapter = BreweryAdapter(viewModel).apply {
-            this.breweryListener = breweryClickListener
+        breweryNameAdapter = BreweryNameAdapter(viewModel).apply {
+            this.breweryClickListener = clickListener
         }
-        binding.rvBreweries.adapter = breweryAdapter
+        binding.rvBreweries.adapter = breweryNameAdapter
     }
 
     private fun setObservers() {
-        viewModel.mutableBreweriesLiveData.observe(viewLifecycleOwner, Observer {
-            breweryAdapter.submitList(it)
-        })
-
         viewModel.mutableFailureError.observe(viewLifecycleOwner, Observer {
             shouldShowOrHideEmptyContainer()
+        })
+
+        viewModel.mutableBreweriesByName.observe(viewLifecycleOwner, Observer {
+            breweryNameAdapter.submitList(it)
+            hideSoftKeyBoard()
         })
     }
 
@@ -77,8 +80,14 @@ class FragmentBreweries : BaseFragment<BreweryViewModel>() {
         binding.clEmptyContainer.isVisible = true
     }
 
+    private fun hideSoftKeyBoard() {
+        val inputMethodManager =
+            activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(binding.etSearchedByName.windowToken, 0)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        breweryAdapter.removeListener()
+        breweryNameAdapter.removeListener()
     }
 }

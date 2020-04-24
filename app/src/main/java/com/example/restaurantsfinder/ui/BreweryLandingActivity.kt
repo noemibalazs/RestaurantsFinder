@@ -7,7 +7,11 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
+import androidx.navigation.NavHost
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.example.restaurantsfinder.R
 import com.example.restaurantsfinder.base.BaseActivity
 import com.example.restaurantsfinder.base.BaseViewModel
@@ -20,6 +24,10 @@ class BreweryLandingActivity : BaseActivity<BaseViewModel>(),
 
     override fun initViewModel(): BaseViewModel {
         return ViewModelProviders.of(this).get(BaseViewModel::class.java)
+    }
+
+    private val navController: NavController by lazy {
+        return@lazy Navigation.findNavController(this, R.id.nav_host_fragment)
     }
 
     var myToolbar: Toolbar? = null
@@ -40,7 +48,7 @@ class BreweryLandingActivity : BaseActivity<BaseViewModel>(),
 
         navView.setNavigationItemSelectedListener(this)
 
-        findNavController(R.id.nav_host_fragment).addOnDestinationChangedListener { _, destination, _ ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             toolBar.title = destination.label
         }
     }
@@ -56,19 +64,23 @@ class BreweryLandingActivity : BaseActivity<BaseViewModel>(),
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.navBreweryList -> {
-                findNavController(R.id.nav_host_fragment).navigate(R.id.breweriesFragment)
+                navController.navigate(R.id.breweriesFragment)
             }
             R.id.navBreweryCity -> {
-                findNavController(R.id.nav_host_fragment).navigate(R.id.breweriesByCity)
+                navController.navigate(R.id.breweriesByCity)
             }
 
             R.id.navBreweryState -> {
-                findNavController(R.id.nav_host_fragment).navigate(R.id.breweriesByState)
+                navController.navigate(R.id.breweriesByState)
             }
-//
-//            R.id.navVisited -> {
-//                findNavController(R.id.nav_host_fragment).navigate(R.id.visitedFragment)
-//            }
+
+            R.id.navBreweryName -> {
+                navController.navigate(R.id.breweriesByName)
+            }
+
+            R.id.navBreweryVisited -> {
+                navController.navigate(R.id.breweriesVisited)
+            }
         }
         drawerLayout.closeDrawers()
         return true

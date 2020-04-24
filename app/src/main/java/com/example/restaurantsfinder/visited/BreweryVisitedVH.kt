@@ -1,24 +1,23 @@
-package com.example.restaurantsfinder.state
+package com.example.restaurantsfinder.visited
 
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurantsfinder.R
 import com.example.restaurantsfinder.adapterhelper.BreweryClickListener
 import com.example.restaurantsfinder.data.Brewery
-import com.example.restaurantsfinder.databinding.ViewItemBaseStateBinding
+import com.example.restaurantsfinder.databinding.ViewItemVisitedBinding
 import com.example.restaurantsfinder.helper.DebounceClickListener
 import com.orhanobut.logger.Logger
 
-class BreweryStateVH(
-    private val binding: ViewItemBaseStateBinding,
-    private val breweriesByStateViewModel: BreweriesByStateViewModel,
+class BreweryVisitedVH(
+    private val binding: ViewItemVisitedBinding,
+    private val breweryVisitedViewModel: BreweryVisitedViewModel,
     private val breweryClickListener: BreweryClickListener?
-) : RecyclerView.ViewHolder(binding.root){
+) : RecyclerView.ViewHolder(binding.root) {
 
     fun onBind(brewery: Brewery) {
 
-        binding.viewModel = breweriesByStateViewModel
+        binding.viewModel = breweryVisitedViewModel
         binding.apply {
             val context = binding.root.context
             tvName.text = context.getString(R.string.name, brewery.name)
@@ -29,7 +28,6 @@ class BreweryStateVH(
             clContainer.setOnClickListener(object : DebounceClickListener() {
                 override fun onDebounce(view: View) {
                     breweryClickListener?.onBreweryClicked(brewery.id, brewery.name)
-                    breweriesByStateViewModel.addBreweryToDB(brewery)
                     Logger.d("The site of brewery is: ${brewery.website_url}")
                 }
             })

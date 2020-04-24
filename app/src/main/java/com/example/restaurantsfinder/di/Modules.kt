@@ -6,9 +6,11 @@ import com.example.restaurantsfinder.datasource.*
 import com.example.restaurantsfinder.details.BreweryDetailsViewModel
 import com.example.restaurantsfinder.helper.BreweryMapper
 import com.example.restaurantsfinder.helper.SharedPrefHelper
+import com.example.restaurantsfinder.name.BreweriesByNameViewModel
 import com.example.restaurantsfinder.network.BreweryApiService
 import com.example.restaurantsfinder.room.BreweryDAO
 import com.example.restaurantsfinder.state.BreweriesByStateViewModel
+import com.example.restaurantsfinder.visited.BreweryVisitedViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.GlobalContext.get
@@ -86,6 +88,23 @@ val breweriesByStateViewModule = module {
         BreweriesByStateViewModel(
             breweryRepository = get(),
             breweryMapper = get()
+        )
+    }
+}
+
+val breweriesByNameModule = module {
+    viewModel {
+        BreweriesByNameViewModel(
+            breweryRepository = get(),
+            breweryMapper = get()
+        )
+    }
+}
+
+val breweriesVisitedViewModule = module {
+    viewModel {
+        BreweryVisitedViewModel(
+            breweryRepository = get()
         )
     }
 }

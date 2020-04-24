@@ -1,4 +1,4 @@
-package com.example.restaurantsfinder.breweries
+package com.example.restaurantsfinder.visited
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,30 +12,30 @@ import androidx.navigation.fragment.findNavController
 import com.example.restaurantsfinder.R
 import com.example.restaurantsfinder.adapterhelper.BreweryClickListener
 import com.example.restaurantsfinder.base.BaseFragment
-import com.example.restaurantsfinder.databinding.FragmentBreweriesBinding
+import com.example.restaurantsfinder.databinding.FragmentVisitedBinding
 import com.example.restaurantsfinder.helper.ACTION_KEY
 import com.example.restaurantsfinder.helper.SharedPrefHelper
 import org.koin.android.ext.android.inject
 
-class FragmentBreweries : BaseFragment<BreweryViewModel>() {
+class FragmentBreweriesVisited : BaseFragment<BreweryVisitedViewModel>() {
 
-    private val viewModel: BreweryViewModel by inject()
+    private val viewModel: BreweryVisitedViewModel by inject()
     private val sharedPrefHelper: SharedPrefHelper by inject()
+    private lateinit var binding: FragmentVisitedBinding
 
-    private lateinit var binding: FragmentBreweriesBinding
-    private lateinit var breweryAdapter: BreweryAdapter
+    private lateinit var breweryVisitedAdapter: BreweryVisitedAdapter
 
-    private val breweryClickListener = object : BreweryClickListener {
+    private val clickListener = object : BreweryClickListener {
         override fun onBreweryClicked(id: Int, name: String) {
             sharedPrefHelper.saveBreweryId(id)
             findNavController().navigate(
-                R.id.navigateFromBreweriesToDetails,
+                R.id.navigateFromVisitedToDetails,
                 bundleOf(ACTION_KEY to name)
             )
         }
     }
 
-    override fun initViewModel(): BreweryViewModel {
+    override fun initViewModel(): BreweryVisitedViewModel {
         return viewModel
     }
 
@@ -44,31 +44,31 @@ class FragmentBreweries : BaseFragment<BreweryViewModel>() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_breweries, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_visited, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initBinding()
-        setObservers()
+        observers()
     }
 
     private fun initBinding() {
         binding.viewModel = viewModel
-        breweryAdapter = BreweryAdapter(viewModel).apply {
-            this.breweryListener = breweryClickListener
+        breweryVisitedAdapter = BreweryVisitedAdapter(viewModel).apply {
+            this.breweryClickListener = clickListener
         }
-        binding.rvBreweries.adapter = breweryAdapter
+        binding.rvBreweries.adapter = breweryVisitedAdapter
     }
 
-    private fun setObservers() {
-        viewModel.mutableBreweriesLiveData.observe(viewLifecycleOwner, Observer {
-            breweryAdapter.submitList(it)
-        })
-
+    private fun observers() {
         viewModel.mutableFailureError.observe(viewLifecycleOwner, Observer {
             shouldShowOrHideEmptyContainer()
+        })
+
+        viewModel.mutableVisitedBreweries.observe(viewLifecycleOwner, Observer {
+            breweryVisitedAdapter.submitList(it)
         })
     }
 
@@ -79,6 +79,6 @@ class FragmentBreweries : BaseFragment<BreweryViewModel>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        breweryAdapter.removeListener()
+        breweryVisitedAdapter.removeListener()
     }
 }

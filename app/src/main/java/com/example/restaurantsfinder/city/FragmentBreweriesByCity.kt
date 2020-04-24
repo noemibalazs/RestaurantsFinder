@@ -63,7 +63,6 @@ class FragmentBreweriesByCity : BaseFragment<BreweriesByCityViewModel>() {
             this.breweryClickListener = clickListener
         }
         binding.rvBreweries.adapter = breweryCityAdapter
-        binding.rvBreweries.setHasFixedSize(true)
     }
 
     private fun setObserver() {

@@ -24,6 +24,10 @@ class KoinInjection {
 
             fun getBreweriesByState() = listOf(breweriesByStateViewModule)
 
+            fun getBreweriesByName() = listOf(breweriesByNameModule)
+
+            fun getBreweriesVisited() = listOf(breweriesVisitedViewModule)
+
             return mutableListOf<Module>().apply {
                 addAll(getNetworkModule())
                 addAll(getDataBaseModule())
@@ -33,6 +37,8 @@ class KoinInjection {
                 addAll(getBreweryDetails())
                 addAll(getBreweriesByCity())
                 addAll(getBreweriesByState())
+                addAll(getBreweriesByName())
+                addAll(getBreweriesVisited())
             }
         }
     }

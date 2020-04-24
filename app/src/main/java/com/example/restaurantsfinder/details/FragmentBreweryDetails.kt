@@ -1,6 +1,9 @@
 package com.example.restaurantsfinder.details
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +31,7 @@ class FragmentBreweryDetails : BaseFragment<BreweryDetailsViewModel>(), OnMapRea
 
     private val viewModel: BreweryDetailsViewModel by inject()
     private lateinit var binding: FragmentBreweryDetailsBinding
-    private lateinit var mMap: GoogleMap
+    private var mMap: GoogleMap? = null
 
     override fun initViewModel(): BreweryDetailsViewModel {
         return viewModel
@@ -62,6 +65,10 @@ class FragmentBreweryDetails : BaseFragment<BreweryDetailsViewModel>(), OnMapRea
         viewModel.mutableBrewery.observe(viewLifecycleOwner, Observer {
             populateFields(it)
             showBreweryOnMap(it, mMap)
+        })
+
+        viewModel.mutableSiteClicked.observe(viewLifecycleOwner, Observer {
+            navigateOrNotToBrewerySite()
         })
     }
 
@@ -116,6 +123,20 @@ class FragmentBreweryDetails : BaseFragment<BreweryDetailsViewModel>(), OnMapRea
 
             it.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
             it.addMarker(markerOptions)
+        }
+    }
+
+    private fun navigateOrNotToBrewerySite() {
+        val site = binding.tvWebsite.text
+        if (TextUtils.isEmpty(site)) {
+            Toast.makeText(activity, "Sorry there is no site where to navigate", Toast.LENGTH_LONG)
+                .show()
+        } else {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.apply {
+                data = Uri.parse(site.toString())
+            }
+            startActivity(intent)
         }
     }
 }

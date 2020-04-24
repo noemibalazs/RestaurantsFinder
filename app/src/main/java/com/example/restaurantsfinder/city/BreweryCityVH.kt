@@ -1,6 +1,5 @@
 package com.example.restaurantsfinder.city
 
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurantsfinder.R
@@ -8,7 +7,7 @@ import com.example.restaurantsfinder.adapterhelper.BreweryClickListener
 import com.example.restaurantsfinder.data.Brewery
 import com.example.restaurantsfinder.databinding.ViewItemBaseCityBinding
 import com.example.restaurantsfinder.helper.DebounceClickListener
-import java.util.logging.Logger
+import com.orhanobut.logger.Logger
 
 class BreweryCityVH(
     private val binding: ViewItemBaseCityBinding,
@@ -30,7 +29,7 @@ class BreweryCityVH(
                 override fun onDebounce(view: View) {
                     breweryClickListener?.onBreweryClicked(brewery.id, brewery.name)
                     breweriesByCityViewModel.addBreweryToDB(brewery)
-                    Log.d("BCVH", "The site of brewery is: ${brewery.website_url}")
+                    Logger.d("The site of brewery is: ${brewery.website_url}")
                 }
             })
         }

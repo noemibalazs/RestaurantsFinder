@@ -10,7 +10,7 @@
             android:title="@string/menu_breweries" />
         <item
             android:id="@+id/navBreweryCity"
-            android:icon="@drawable/beer"
+            android:icon="@drawable/beer6"
             android:title="@string/menu_city" />
         <item
             android:id="@+id/navBreweryState"
@@ -20,6 +20,10 @@
             android:id="@+id/navBreweryName"
             android:icon="@drawable/beer3"
             android:title="@string/menu_name" />
+        <item
+            android:id="@+id/navBreweryVisited"
+            android:icon="@drawable/beer5"
+            android:title="@string/menu_visited"/>
     </group>
 
 

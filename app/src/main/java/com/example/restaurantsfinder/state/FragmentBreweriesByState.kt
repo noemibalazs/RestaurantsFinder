@@ -62,7 +62,6 @@ class FragmentBreweriesByState : BaseFragment<BreweriesByStateViewModel>() {
             this.breweryClickListener = clickListener
         }
         binding.rvBreweries.adapter = breweriesByStateAdapter
-        binding.rvBreweries.setHasFixedSize(true)
     }
 
     private fun setObserver() {
