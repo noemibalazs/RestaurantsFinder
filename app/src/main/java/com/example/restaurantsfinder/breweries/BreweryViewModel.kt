@@ -61,13 +61,13 @@ class BreweryViewModel(
     }
 
     fun addBreweryToDB(brewery: Brewery) {
+        Logger.d("Add brewery to data base")
+
         val jobId = launch {
             val entity = breweryMapper.mapModelToEntity(brewery)
-            val result = breweryRepository.breweryLocalDataSource.addBrewery(entity)
+            breweryRepository.addBrewery2DB(entity)
             withContext(Dispatchers.Main) {
-                result.either(
-                    { failure -> onLocalBrewerySaved(failure, null) },
-                    { success -> onLocalBrewerySaved(null, success) })
+                Logger.d("Entity was added to db.")
             }
         }
         addJob(jobId)

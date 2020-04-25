@@ -33,7 +33,7 @@ class BreweriesByStateViewModel(
 
     private fun loadBreweriesByState() {
         val jobId = launch {
-            val result = breweryRepository.breweryRemoteDataSource.getBreweriesByState(
+            val result = breweryRepository.getBreweriesByState(
                 mutableStateName.get() ?: return@launch
             )
             withContext(Dispatchers.Main) {
@@ -74,10 +74,7 @@ class BreweriesByStateViewModel(
             val entity = breweryMapper.mapModelToEntity(brewery)
             val result = breweryRepository.breweryLocalDataSource.addBrewery(entity)
             withContext(Dispatchers.Main) {
-                result.either(
-                    { failure -> onSavingEntityResponse(failure, null) },
-                    { success -> onSavingEntityResponse(null, success) }
-                )
+                Logger.d("Entity was added to db.")
             }
         }
 

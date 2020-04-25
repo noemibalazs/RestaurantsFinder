@@ -17,7 +17,7 @@ import org.koin.core.context.GlobalContext.get
 import org.koin.dsl.module
 
 val breweryDataBase = module {
-    single { BreweryDAO.getDataBaseInstance(androidApplication()) }
+    single { BreweryDAO.getDataBaseInstance(androidApplication().applicationContext) }
 }
 
 val networkModule = module {
@@ -68,7 +68,8 @@ val breweryDetailsModule = module {
     viewModel {
         BreweryDetailsViewModel(
             breweryRepository = get(),
-            sharedPrefHelper = get()
+            sharedPrefHelper = get(),
+            breweryMapper = get()
         )
     }
 }

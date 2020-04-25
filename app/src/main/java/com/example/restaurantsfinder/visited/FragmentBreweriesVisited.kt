@@ -12,9 +12,13 @@ import androidx.navigation.fragment.findNavController
 import com.example.restaurantsfinder.R
 import com.example.restaurantsfinder.adapterhelper.BreweryClickListener
 import com.example.restaurantsfinder.base.BaseFragment
+import com.example.restaurantsfinder.data.Brewery
 import com.example.restaurantsfinder.databinding.FragmentVisitedBinding
 import com.example.restaurantsfinder.helper.ACTION_KEY
+import com.example.restaurantsfinder.helper.ACTION_SHOW
+import com.example.restaurantsfinder.helper.SHOW
 import com.example.restaurantsfinder.helper.SharedPrefHelper
+import com.orhanobut.logger.Logger
 import org.koin.android.ext.android.inject
 
 class FragmentBreweriesVisited : BaseFragment<BreweryVisitedViewModel>() {
@@ -30,8 +34,12 @@ class FragmentBreweriesVisited : BaseFragment<BreweryVisitedViewModel>() {
             sharedPrefHelper.saveBreweryId(id)
             findNavController().navigate(
                 R.id.navigateFromVisitedToDetails,
-                bundleOf(ACTION_KEY to name)
+                bundleOf(ACTION_KEY to name, ACTION_SHOW to SHOW)
             )
+        }
+
+        override fun addBreweryToDB(brewery: Brewery) {
+            Logger.d("Leave it empty no need to add to data base!")
         }
     }
 

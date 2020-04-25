@@ -35,7 +35,7 @@ class BreweriesByCityViewModel(
 
     private fun loadBreweriesByCity() {
         val jobId = launch {
-            val result = breweryRepository.breweryRemoteDataSource.getBreweriesByCity(
+            val result = breweryRepository.getBreweriesByCity(
                 mutableCityName.get() ?: return@launch
             )
             withContext(Dispatchers.Main) {
@@ -75,12 +75,9 @@ class BreweriesByCityViewModel(
 
         val jobId = launch {
             val entity: BreweryEntity = breweryMapper.mapModelToEntity(brewery)
-            val result = breweryRepository.breweryLocalDataSource.addBrewery(entity)
+             breweryRepository.breweryLocalDataSource.addBrewery(entity)
             withContext(Dispatchers.Main) {
-                result.either(
-                    { failure -> onSavingEntityResponse(failure, null) },
-                    { success -> onSavingEntityResponse(null, success) }
-                )
+
             }
         }
         addJob(jobId)

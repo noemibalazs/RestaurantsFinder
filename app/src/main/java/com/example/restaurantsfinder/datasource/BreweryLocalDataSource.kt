@@ -10,9 +10,9 @@ interface BreweryLocalDataSource {
 
     fun getAllBreweries(): Either<Failure, List<Brewery>>
 
-    fun getBreweryById(id: Int): Either<Failure, Brewery>
+    fun getBreweryById(id: Int): Brewery
 
-    fun addBrewery(entity: BreweryEntity): Either<Failure, Success>
+    fun addBrewery(entity: BreweryEntity)
 
-    fun deleteBrewery(entity: BreweryEntity): Either<Failure, Success>
+    fun deleteBrewery(entity: BreweryEntity)
 }

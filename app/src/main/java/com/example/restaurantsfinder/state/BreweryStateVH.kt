@@ -29,7 +29,7 @@ class BreweryStateVH(
             clContainer.setOnClickListener(object : DebounceClickListener() {
                 override fun onDebounce(view: View) {
                     breweryClickListener?.onBreweryClicked(brewery.id, brewery.name)
-                    breweriesByStateViewModel.addBreweryToDB(brewery)
+                    breweryClickListener?.addBreweryToDB(brewery)
                     Logger.d("The site of brewery is: ${brewery.website_url}")
                 }
             })

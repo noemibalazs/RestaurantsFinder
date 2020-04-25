@@ -34,7 +34,7 @@ class BreweriesByNameViewModel(
     private fun loadBreweriesByName() {
 
         val jobId = launch {
-            val result = breweryRepository.breweryRemoteDataSource.getBreweriesByName(
+            val result = breweryRepository.getBreweriesByName(
                 mutableBreweryName.get() ?: return@launch
             )
             withContext(Dispatchers.Main) {
@@ -75,12 +75,9 @@ class BreweriesByNameViewModel(
 
         val jobId = launch {
             val entity = breweryMapper.mapModelToEntity(brewery)
-            val result = breweryRepository.breweryLocalDataSource.addBrewery(entity)
+            breweryRepository.breweryLocalDataSource.addBrewery(entity)
             withContext(Dispatchers.Main) {
-                result.either(
-                    { failure -> onLocaleFailure(failure) },
-                    { success -> onLocaleSuccess(success) }
-                )
+                Logger.d("Entity was added to db.")
             }
         }
 

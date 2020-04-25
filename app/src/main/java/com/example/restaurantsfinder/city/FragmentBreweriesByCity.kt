@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.restaurantsfinder.R
 import com.example.restaurantsfinder.adapterhelper.BreweryClickListener
 import com.example.restaurantsfinder.base.BaseFragment
+import com.example.restaurantsfinder.data.Brewery
 import com.example.restaurantsfinder.databinding.FragmentByCityBinding
 import com.example.restaurantsfinder.helper.ACTION_KEY
 import com.example.restaurantsfinder.helper.SharedPrefHelper
@@ -35,6 +36,10 @@ class FragmentBreweriesByCity : BaseFragment<BreweriesByCityViewModel>() {
                 R.id.navigateFromCityToDetails,
                 bundleOf(ACTION_KEY to name)
             )
+        }
+
+        override fun addBreweryToDB(brewery: Brewery) {
+            viewModel.addBreweryToDB(brewery)
         }
     }
 

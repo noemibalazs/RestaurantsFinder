@@ -8,13 +8,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.afollestad.materialdialogs.MaterialDialog
 import com.example.restaurantsfinder.R
 import com.example.restaurantsfinder.base.BaseFragment
 import com.example.restaurantsfinder.data.Brewery
 import com.example.restaurantsfinder.databinding.FragmentBreweryDetailsBinding
 import com.example.restaurantsfinder.helper.ACTION_KEY
+import com.example.restaurantsfinder.helper.ACTION_SHOW
 import com.example.restaurantsfinder.ui.BreweryLandingActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
@@ -55,10 +59,19 @@ class FragmentBreweryDetails : BaseFragment<BreweryDetailsViewModel>(), OnMapRea
 
     private fun initBinding() {
         binding.viewModel = viewModel
-        val name = arguments?.getString(ACTION_KEY)
-        (activity as BreweryLandingActivity).myToolbar?.title =
-            getString(R.string.details_title, name)
+        getValuesFromArguments()
         setUpMap()
+    }
+
+    private fun getValuesFromArguments() {
+        arguments?.let {
+            val name = it.getString(ACTION_KEY)
+            val show = it.getString(ACTION_SHOW)
+            (activity as BreweryLandingActivity).myToolbar?.title =
+                getString(R.string.details_title, name)
+            if (show == "show")
+                binding.ivDelete.isVisible = true
+        }
     }
 
     private fun observers() {
@@ -67,8 +80,16 @@ class FragmentBreweryDetails : BaseFragment<BreweryDetailsViewModel>(), OnMapRea
             showBreweryOnMap(it, mMap)
         })
 
-        viewModel.mutableSiteClicked.observe(viewLifecycleOwner, Observer {
+        viewModel.onSiteClicked.observe(viewLifecycleOwner, Observer {
             navigateOrNotToBrewerySite()
+        })
+
+        viewModel.onDeleteClicked.observe(viewLifecycleOwner, Observer {
+            showDeleteDialogToUser()
+        })
+
+        viewModel.deleteClicked.observe(viewLifecycleOwner, Observer {
+            findNavController().navigate(R.id.breweriesVisited)
         })
     }
 
@@ -137,6 +158,22 @@ class FragmentBreweryDetails : BaseFragment<BreweryDetailsViewModel>(), OnMapRea
                 data = Uri.parse(site.toString())
             }
             startActivity(intent)
+        }
+    }
+
+    private fun showDeleteDialogToUser() {
+        activity?.let {
+            MaterialDialog(it).show {
+                title(R.string.dialog_title)
+                positiveButton(R.string.ok)
+                negativeButton(R.string.cancel)
+                negativeButton {
+                    dismiss()
+                }
+                positiveButton {
+                    viewModel.deleteBreweryEntity()
+                }
+            }
         }
     }
 }

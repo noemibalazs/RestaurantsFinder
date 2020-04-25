@@ -28,7 +28,7 @@ class BreweryVisitedViewModel(
     private fun loadVisitedBreweries() {
 
         val jobId = launch {
-            val result = breweryRepository.breweryLocalDataSource.getAllBreweries()
+            val result = breweryRepository.getAllBreweriesFromDB()
             withContext(Dispatchers.Main) {
                 result.either(
                     { failure -> onLocaleLoadedBreweriesResponse(failure, null) },
