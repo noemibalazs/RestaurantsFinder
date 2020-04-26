@@ -21,7 +21,7 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         app:srcCompat="@drawable/logo" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"

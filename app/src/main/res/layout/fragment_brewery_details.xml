@@ -54,7 +54,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_background">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_name"
                     style="@style/HandTextAppearance"
                     android:layout_width="match_parent"
@@ -67,7 +67,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Black Wolf" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_address"
                     style="@style/HandTextAppearance"
                     android:layout_width="match_parent"
@@ -78,7 +78,7 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_name"
                     tools:text="Clinton Ave" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_city_state"
                     style="@style/HandTextAppearance"
                     android:layout_width="match_parent"
@@ -89,7 +89,7 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_address"
                     tools:text="Washington - w" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_phone"
                     style="@style/HandTextAppearance"
                     android:layout_width="match_parent"
@@ -100,7 +100,7 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_city_state"
                     tools:text="511-34-56" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_website"
                     style="@style/HandTextAppearance"
                     android:layout_width="match_parent"

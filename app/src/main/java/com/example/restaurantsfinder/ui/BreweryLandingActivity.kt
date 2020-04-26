@@ -26,7 +26,7 @@ class BreweryLandingActivity : BaseActivity<BaseViewModel>(),
         return ViewModelProviders.of(this).get(BaseViewModel::class.java)
     }
 
-    private val navController: NavController by lazy {
+    val navController: NavController by lazy {
         return@lazy Navigation.findNavController(this, R.id.nav_host_fragment)
     }
 

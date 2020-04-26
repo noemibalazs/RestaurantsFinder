@@ -28,7 +28,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_name"
             style="@style/HandTextAppearance"
             android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="MadTree Brewing" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_street"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_name"
             tools:text="Street: 3301 Madison Rd" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_street"
             tools:text="Cincinnati" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_site"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

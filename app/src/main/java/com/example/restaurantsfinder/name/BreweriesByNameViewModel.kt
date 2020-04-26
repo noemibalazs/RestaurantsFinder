@@ -75,21 +75,12 @@ class BreweriesByNameViewModel(
 
         val jobId = launch {
             val entity = breweryMapper.mapModelToEntity(brewery)
-            breweryRepository.breweryLocalDataSource.addBrewery(entity)
+            breweryRepository.addBrewery2DB(entity)
             withContext(Dispatchers.Main) {
                 Logger.d("Entity was added to db.")
             }
         }
 
         addJob(jobId)
-    }
-
-
-    private fun onLocaleFailure(failure: Failure) {
-        Logger.e("Error saving entity into the database, see message: ${failure.message}")
-    }
-
-    private fun onLocaleSuccess(success: Success) {
-        Logger.d("Success saving entity!")
     }
 }

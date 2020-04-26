@@ -72,7 +72,7 @@ class BreweriesByStateViewModel(
 
         val jobId = launch {
             val entity = breweryMapper.mapModelToEntity(brewery)
-            val result = breweryRepository.breweryLocalDataSource.addBrewery(entity)
+            breweryRepository.addBrewery2DB(entity)
             withContext(Dispatchers.Main) {
                 Logger.d("Entity was added to db.")
             }
@@ -80,17 +80,4 @@ class BreweriesByStateViewModel(
 
         addJob(jobId)
     }
-
-    private fun onSavingEntityResponse(failure: Failure?, success: Success?) {
-        Logger.d("On adding brewery entity to database throw: $failure - success: $success")
-
-        failure?.let {
-            Logger.d("Error saving entity to database, see the failure message: ${failure.message}")
-        }
-
-        success?.let {
-            Logger.d("Success saving entity into database.")
-        }
-    }
-
 }
