@@ -11,12 +11,12 @@ Design and implent a Brewery Finder application using the openbrewerydb API:
 
 Libraries:
 
-Dagger2
-Room
-Retrofit
-Glide
-Support design libraries
-Google Maps
+1. Dagger2
+2. Room
+3. Retrofit
+4. Glide
+5. Support design libraries
+6. Google Maps
 
 Screenshots:
 
