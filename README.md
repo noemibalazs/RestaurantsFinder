@@ -7,7 +7,7 @@ Design and implent a Brewery Finder application using the openbrewerydb API:
 1. Fetching data using Retrofit
 2. Storing data using Room
 3. Implementing Dagger2 dependency injection
-4. Using MVP architecture
+4. Using MVVM architecture
 
 Libraries:
 
